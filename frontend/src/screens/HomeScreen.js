@@ -53,7 +53,6 @@ export default function LoginPage() {
           <br></br>
           <br></br>
           <br></br>
-          <br></br>
           <h4 className="my-3">Iniciar Sesión</h4>
           <Form onSubmit={onSubmit}>
             <Form.Group className="mb-3" controlId="email">
@@ -87,10 +86,10 @@ export default function LoginPage() {
             <div className="mb-3">
               Nuevo usuario? <Link to="/CrearUsuario">Crear una cuenta</Link>
             </div>
-            {/*  <div className="mb-3">
+            <div className="mb-3">
               Olvido su contraseña?{' '}
-              <Link to={`/forget-password`}>Restaurar contraseña</Link>
-            </div>*/}
+              <Link to={`/forgetpassword`}>Restaurar contraseña</Link>
+            </div>
           </Form>
         </Container>
       </section>

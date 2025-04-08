@@ -1,9 +1,15 @@
 CREATE DATABASE sgirs
 
+CREATE TABLE sectores(
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(255) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 CREATE TABLE users(
     id SERIAL PRIMARY KEY,
-    nit INTEGER NOT NULL,
+    nit VARCHAR(255) NOT NULL,
     idsector INTEGER REFERENCES sectores(id),
     nomestablecimiento VARCHAR(255) UNIQUE NOT NULL,
     direccion VARCHAR(255) NOT NULL,
@@ -18,29 +24,9 @@ CREATE TABLE users(
     gravatar VARCHAR(255)
 );
 
-CREATE TABLE userformularios(
-    id SERIAL PRIMARY KEY,
-    idformulario INTEGER REFERENCES formulario(id),
-    validacion BOOLEAN,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
-
-CREATE TABLE formularios(
-    id SERIAL PRIMARY KEY,
-    formulario VARCHAR(255) UNIQUE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
 
 
-
-CREATE TABLE sectores(
-    id SERIAL PRIMARY KEY,
-    nombre VARCHAR(255) UNIQUE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-INSERT INTO sectores (nombre) VALUES ('Comercial y servicios'), ('Organicos'), ('Instituciones educativas'), ('Eventos masivos'), ('Entidades publicas'), ('Desarrollos multifamiliares')
+INSERT INTO sectores (nombre) VALUES ('Comercial y servicios'), ('Organicos'), ('Instituciones educativas'), ('Eventos masivos'), ('Entidades publicas'), ('Desarrollos multifamiliares');
 
 CREATE TABLE questions(
     id SERIAL PRIMARY KEY,
@@ -101,7 +87,6 @@ CREATE TABLE questions(
      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
 
-CONSULTAS PARA LOS INDICADORES ORGANICOS
 
 CREATE TABLE i1_organicos(
     id SERIAL PRIMARY KEY,
@@ -128,7 +113,6 @@ CREATE TABLE i1_organicos(
     update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CONSULTAS PARA LOS INDICADORES COMERCIAL Y SERVICIOS
 
 CREATE TABLE i1_comercial(
     id SERIAL PRIMARY KEY,
@@ -153,7 +137,7 @@ CREATE TABLE i1_comercial(
     i1totaljunio FLOAT,
      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)
+);
 
 CREATE TABLE i2_comercial(
     id SERIAL PRIMARY KEY,
@@ -240,7 +224,6 @@ CREATE TABLE i5_comercial(
     update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
-CONSULTAS PARA LOS INDICADORES INSTITUCIONES EDUCATIVAS
 
 CREATE TABLE i1_educativas(
     id SERIAL PRIMARY KEY,
@@ -362,7 +345,6 @@ CREATE TABLE i5_educativas(
     );
 
 
-CONSULTAS PARA LOS INDICADORES EVENTOS MASIVOS
 
 CREATE TABLE i1_masivos(
     id SERIAL PRIMARY KEY,
@@ -453,7 +435,6 @@ CREATE TABLE i4_masivos(
     );
 
 
-CONSULTAS PARA LOS INDICADORES COMERCIAL Y SERVICIOS
 
 CREATE TABLE i1_publicas(
     id SERIAL PRIMARY KEY,
@@ -547,7 +528,6 @@ CREATE TABLE i4_publicas(
     update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CONSULTAS PARA LOS INDICADORES DESARROLLOS MULTIFAMILIARES
 
 CREATE TABLE i1_multifamiliares(
     id SERIAL PRIMARY KEY,

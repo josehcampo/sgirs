@@ -14,25 +14,6 @@ function RegistroConsulta() {
   const redirectInUrl = new URLSearchParams(search).get('redirect');
   const redirect = redirectInUrl ? redirectInUrl : '/';
 
-  const [hasAnswered, setHasAnswered] = useState(false);
-
-  useEffect(() => {
-    // Verificar si el usuario ya ha respondido al cargar el componente
-    const hasAnsweredStored = localStorage.getItem('answered');
-    setHasAnswered(!!hasAnsweredStored);
-  }, []);
-
-  const handleButtonClick = () => {
-    if (hasAnswered) {
-      // El usuario ya ha respondido, muestra un mensaje de error
-      toast.error('El usuario ya ha respondido al formulario');
-    } else {
-      // El usuario aún no ha respondido
-      // Establecer el valor en localStorage
-      localStorage.setItem('answered', true);
-    }
-  };
-
   return (
     <Container className="small-container1">
       <br />
@@ -53,13 +34,10 @@ function RegistroConsulta() {
               </Card.Body>
               <Card.Body>
                 {/* Utilizamos el componente Link para redirigir */}
-                <Link
-                  to={hasAnswered ? '/RegistroConsulta' : '/RegistrarPreguntas'}
-                >
+                <Link to={'/RegistrarPreguntas'}>
                   <Button
                     variant="success"
                     //  disabled={hasAnswered}
-                    onClick={handleButtonClick}
                   >
                     Responder Formulario
                   </Button>

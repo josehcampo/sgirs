@@ -11,7 +11,8 @@ const { ORIGIN } = require('./config');
 const app = express();
 app.use(
   cors({
-    origin: ORIGIN,
+    origin:
+      'https://reportesgirscali.com/' || 'https://www.reportesgirscali.com/',
     credentials: true,
   })
 );

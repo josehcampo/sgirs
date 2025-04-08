@@ -2,21 +2,25 @@ const multer = require('multer');
 const path = require('path');
 
 // Obtén la carpeta de destino desde una variable de entorno
-const uploadDestination =
-  process.env.UPLOAD_DESTINATION ||
-  'C:/Users/josec/Documents/UAESP/PROYECTO_SGIRS - VERSION 1/backend/src/uploads';
+//const uploadDestination = process.env.UPLOAD_DESTINATION || 'uploads';
 
 // Configurar opciones de almacenamiento y nombre de archivo
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, uploadDestination)); // Carpeta donde se guardarán los archivos
+    cb(null, path.join('/home/ubuntu/proyecto_sgirs/backend/src/uploads'));
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); // Nombre del archivo en el servidor
+    cb(null, Date.now() + path.extname(file.originalname));
   },
 });
 
-// Crear objeto multer con la configuración de almacenamiento
-const upload = multer({ storage });
+const upload = multer({
+  storage,
+  limits: { fileSize: 20 * 1024 * 1024 }, // Ajusta el límite según tus necesidades
+  fileFilter: function (req, file, cb) {
+    // Añade lógica de filtro si es necesario
+    cb(null, true);
+  },
+});
 
 module.exports = upload;

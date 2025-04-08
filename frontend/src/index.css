@@ -6,15 +6,21 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 .navbar {
-  background-color: #2c2e3a;
+  background-color: transparent !important; /* Fuerza la transparencia */
+  box-shadow: none !important; /* Elimina cualquier sombra */
+  border: none !important; /* Elimina bordes */
 }
 
 body {
   background-image: url('./images/fondo_home.png');
-  background-size: cover;
+  background-size: cover; /* La imagen cubrirá todo el área disponible */
   background-position: center;
+  background-attachment: fixed; /* Hace que la imagen permanezca fija al hacer scroll */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  height: 100vh; /* Asegura que el fondo ocupe la altura de la ventana */
+  margin: 0; /* Elimina cualquier margen del body */
+  overflow-x: hidden; /* Evita el scroll horizontal si es necesario */
 }
 
 .small-container {
@@ -49,4 +55,24 @@ div.padre {
   text-align: center;
   align-items: center;
   justify-content: center;
+}
+
+.nav-links {
+  margin-right: 125px; /* Añade espacio desde el borde izquierdo */
+}
+
+.custom-nav-link {
+  background-color: #1a5739; /* Color de fondo verde */
+  color: white; /* Texto blanco */
+  padding: 8px 16px; /* Ajusta el espacio interno */
+  border-radius: 4px; /* Esquinas redondeadas */
+  text-align: center; /* Centra el texto */
+  text-decoration: none; /* Quita el subrayado */
+  margin-right: 20px; /* Espacio entre botones */
+  transition: background-color 0.3s ease;
+}
+
+.custom-nav-link:hover {
+  background-color: #218838; /* Color verde más oscuro al pasar el cursor */
+  color: white; /* Asegura que el texto siga siendo blanco */
 }

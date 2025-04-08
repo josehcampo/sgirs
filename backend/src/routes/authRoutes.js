@@ -10,6 +10,8 @@ const {
   signup,
   deleteUser,
   updateUser,
+  forgetPassword,
+  resetpassword,
 } = require('../controllers/authcontroller');
 
 const { authRequired } = require('../middlewares/auth.middleware');
@@ -35,5 +37,9 @@ router.get('/consultarusuario/:id', getUser);
 router.delete('/eliminarusuario/:id', deleteUser);
 
 router.put('/actualizarusuario/:id', updateUser);
+
+router.post('/forgetpassword', forgetPassword);
+
+router.post('/resetpassword/:token', resetpassword);
 
 module.exports = router;

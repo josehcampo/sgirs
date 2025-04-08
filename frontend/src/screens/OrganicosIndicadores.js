@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Form, Table, Modal, Button } from 'react-bootstrap';
-import Axios from 'axios';
 import axios from '../api/axios';
 
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -8,6 +7,8 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import MyVerticallyCenteredModal from '../componentes/Modal';
+
+import { FaCheckCircle, FaDownload } from 'react-icons/fa';
 
 export default function OrganicosIndicadores({ userId }) {
   const navigate = useNavigate();
@@ -113,6 +114,8 @@ export default function OrganicosIndicadores({ userId }) {
       );
 
       console.log('Datos enviados correctamente');
+      setShowModal(true); // Mostrar modal de éxito
+
       navigate(redirect || '/');
     } catch (err) {
       console.log('Error al enviar los datos');
@@ -147,8 +150,6 @@ export default function OrganicosIndicadores({ userId }) {
     junio1,
     junio2,
   ]);
-
-  const [loading, setLoading] = useState(false);
 
   return (
     <Container className="small-container2">
@@ -302,7 +303,14 @@ export default function OrganicosIndicadores({ userId }) {
         </div>
 
         <Modal show={showModal} onHide={handleCloseModal}>
-          <Modal.Header closeButton></Modal.Header>
+          <Modal.Header closeButton>
+            <Modal.Title>
+              <FaCheckCircle
+                style={{ color: '#28a745', marginRight: '10px' }}
+              />
+              ¡Éxito!
+            </Modal.Title>
+          </Modal.Header>{' '}
           <Modal.Body>
             {/* Contenido del modal */}
             <p style={{ textAlign: 'justify' }}>
@@ -321,15 +329,26 @@ export default function OrganicosIndicadores({ userId }) {
             </p>
           </Modal.Body>
           <Modal.Footer className="d-flex justify-content-center">
-            <div className="boton">
-              <Button
-                variant="success"
-                type="submit"
-                onClick={(event) => submitHandler(event)}
-              >
-                Enviar
+            <Button
+              variant="success"
+              type="button"
+              onClick={(event) => {
+                setShowModal(false); // Cierra el modal
+                submitHandler(event); // Ejecuta la lógica de envío
+              }}
+            >
+              Enviar
+            </Button>
+
+            <a
+              href="/CERTIFICADO SGIRS GRAN GENERADOR.pdf"
+              download="CERTIFICADO SGIRS GRAN GENERADOR.pdf"
+            >
+              <Button variant="primary" className="ml-2">
+                <FaDownload style={{ marginRight: '5px' }} />
+                Descargar certificado del reporte
               </Button>
-            </div>
+            </a>
           </Modal.Footer>
         </Modal>
 

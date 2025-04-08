@@ -16,6 +16,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isAuth, setIsAuth] = useState(false);
   const [errors, setErrors] = useState(null);
+  const [loading, setLoading] = useState(true); // Nuevo estado para manejar la carga
 
   const signin = async (data) => {
     try {
@@ -25,13 +26,11 @@ export function AuthProvider({ children }) {
       setUser(res.data);
       setIsAuth(true);
       localStorage.setItem('userInfo', JSON.stringify(res.data));
-
       return res.data;
     } catch (error) {
       if (Array.isArray(error.response.data)) {
         return setErrors(error.response.data);
       }
-
       setErrors([error.response.data.message]);
     }
   };
@@ -43,13 +42,11 @@ export function AuthProvider({ children }) {
       });
       setUser(res.data);
       setIsAuth(false);
-
       return res.data;
     } catch (error) {
       if (Array.isArray(error.response.data)) {
         return setErrors(error.response.data);
       }
-
       setErrors([error.response.data.message]);
     }
   };
@@ -64,18 +61,23 @@ export function AuthProvider({ children }) {
   };
 
   useEffect(() => {
-    if (Cookie.get('token')) {
-      axios
-        .get('/profile', { withCredentials: true })
-        .then((res) => {
+    const checkAuth = async () => {
+      if (Cookie.get('token')) {
+        try {
+          const res = await axios.get('/profile', { withCredentials: true });
           setUser(res.data);
           setIsAuth(true);
-        })
-        .catch((err) => {
+        } catch (err) {
           setUser(null);
           setIsAuth(false);
-        });
-    }
+        } finally {
+          setLoading(false); // La verificación de autenticación ha terminado
+        }
+      } else {
+        setLoading(false); // No hay token, termina la carga
+      }
+    };
+    checkAuth();
   }, []);
 
   return (
@@ -87,6 +89,7 @@ export function AuthProvider({ children }) {
         signup,
         signin,
         signout,
+        loading, // Agregamos `loading` al contexto
       }}
     >
       {children}

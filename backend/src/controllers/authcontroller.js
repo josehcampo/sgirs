@@ -1,6 +1,9 @@
 const pool = require('../db');
 const bcrypt = require('bcrypt');
 const { createAccessToken } = require('../libs/jwt');
+const jwt = require('jsonwebtoken'); // Importa la biblioteca que contiene jwt.sign
+const crypto = require('crypto');
+const transporter = require('../config/mailer');
 
 const signin = async (req, res) => {
   const { email, password } = req.body;
@@ -28,7 +31,7 @@ const signin = async (req, res) => {
   const token = await createAccessToken({ id: result.rows[0].id });
 
   res.cookie('token', token, {
-    // httpOnly: true,
+    //httpOnly: true,
     secure: true,
     sameSite: 'none',
     maxAge: 24 * 60 * 60 * 1000, // 1 day
@@ -78,7 +81,7 @@ const signup = async (req, res, next) => {
     const token = await createAccessToken({ id: result.rows[0].id });
 
     res.cookie('token', token, {
-      //httpOnly: true,
+      // httpOnly: true,
       secure: true,
       sameSite: 'none',
       maxAge: 24 * 60 * 60 * 1000,
@@ -211,6 +214,66 @@ const updateUser = async (req, res, next) => {
   }
 };
 
+// FUNCIÓN PARA CAMBIAR CONTRASEÑA
+
+const secretKey = 'tu_clave_secreta'; // Asegúrate de cambiar esto y mantenerlo seguro
+
+const forgetPassword = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [
+      email,
+    ]);
+
+    if (result.rows.length === 0) {
+      return res
+        .status(404)
+        .json({ message: 'El correo electrónico no se encuentra registrado' });
+    }
+
+    const token = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
+
+    const resetLink = `https://reportesgirscali.com/resetpassword/${token}`;
+
+    await transporter.sendMail({
+      from: 'josecampo1972@gmail.com',
+      to: email,
+      subject: 'Restablecimiento de contraseña Plataforma SGIRS',
+      text: `Haz clic en el siguiente enlace para restablecer tu contraseña: ${resetLink}`,
+    });
+
+    res.status(200).json({
+      message: 'Enlace de restablecimiento enviado por correo electrónico',
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: 'Error al enviar el correo electrónico de restablecimiento',
+    });
+  }
+};
+
+//RESETEAR CONTRASEÑA
+
+const resetpassword = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { newPassword } = req.body;
+    const decoded = jwt.verify(token, secretKey);
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await pool.query('UPDATE users SET password = $1 WHERE email = $2', [
+      hashedPassword,
+      decoded.email,
+    ]);
+
+    res.status(200).json({ message: 'Contraseña actualizada exitosamente' });
+  } catch (error) {
+    console.error(error);
+    res.status(401).json({ message: 'Token inválido' });
+  }
+};
+
 //
 
 module.exports = {
@@ -223,4 +286,6 @@ module.exports = {
   signin,
   signout,
   profile,
+  forgetPassword,
+  resetpassword,
 };

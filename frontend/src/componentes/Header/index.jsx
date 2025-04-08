@@ -25,35 +25,38 @@ function CollapsibleExample() {
           <Image
             src={logo1}
             alt="Logo 1"
-            width="130"
-            height="100"
+            width="200"
+            height="200"
             className="mr-2"
           />
         </Navbar.Brand>
-        <Nav>
+        <Nav className="nav-links">
           {!isAuth && (
             <>
-              <Nav.Link as={Link} to="/">
+              <Nav.Link as={Link} to="/" className="custom-nav-link">
                 Iniciar Sesión
               </Nav.Link>
-              <Nav.Link as={Link} to="/crearusuario">
+              <Nav.Link
+                as={Link}
+                to="/crearusuario"
+                className="custom-nav-link"
+              >
                 Registrar
               </Nav.Link>
             </>
           )}
 
           {isAuth && (
-            <NavDropdown title={user.nomestablecimiento}>
-              <Link
-                className="dropdown-item"
-                to="#signout"
-                onClick={() => {
-                  signout();
-                }}
-              >
-                Cerrar Sesión
-              </Link>
-            </NavDropdown>
+            <Nav.Link
+              as={Link}
+              to="#signout"
+              onClick={() => {
+                signout();
+              }}
+              className="custom-nav-link"
+            >
+              Cerrar Sesión
+            </Nav.Link>
           )}
         </Nav>
       </Container>

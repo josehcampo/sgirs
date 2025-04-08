@@ -10,6 +10,8 @@ import EntidadesPublicasIndicadores from './screens/EntidadesPublicasIndicadores
 import EventosMasivosIndicadores from './screens/EventosMasivosIndicadores';
 import DMIndicadores from './screens/DMIndicadores';
 import ProfilePage from './screens/ProfilePage';
+import ForgetPassword from './screens/forgetpassword';
+import ResetPassword from './screens/ResetPassword';
 
 import { Routes, Route, Outlet } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
@@ -18,7 +20,6 @@ import { ProtectedRoute } from './componentes/ProtectedRoute';
 
 function App() {
   const { isAuth } = useAuth();
-
   return (
     <>
       <Container className="py-5">
@@ -34,6 +35,8 @@ function App() {
           >
             <Route path="/" element={<HomeScreen />} />
             <Route path="/CrearUsuario" element={<CrearUsuario />} />
+            <Route path="/forgetpassword" element={<ForgetPassword />} />
+            <Route path="/ResetPassword/:id" element={<ResetPassword />} />
           </Route>
 
           <Route element={<ProtectedRoute isAllowed={isAuth} redirectTo="/" />}>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Form, Modal, Button } from 'react-bootstrap';
+import { Container, Form, Modal, Button, Spinner } from 'react-bootstrap';
 //import Axios from 'axios';
 import axios from '../api/axios';
 
@@ -7,6 +7,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
+
 import MyVerticallyCenteredModal from '../componentes/Modal';
 import { USER_ROLE } from '../types';
 
@@ -20,6 +21,8 @@ PATH_BY_ROLE.set(USER_ROLE.DESARROLLOS_MULTIFAMILIARES, '/DMIndicadores');
 
 export default function Questions({ userRole, userNit }) {
   // STATE MODAL
+  const [loading, setLoading] = useState(false); // Estado para el botón
+
   const navigate = useNavigate();
   const { search } = useLocation();
   const redirectInUrl = new URLSearchParams(search).get('redirect');
@@ -482,39 +485,315 @@ export default function Questions({ userRole, userNit }) {
   //  controladores de eventos para los archivos PDF
 
   const handlePregunta1pdfChange = (event) => {
+    const fileInput = event.target;
+    const file = fileInput.files[0];
+
+    if (!file) {
+      alert('Selecciona un archivo para cargar.');
+      return;
+    }
+
+    // Validar tipo MIME
+    if (file.type !== 'application/pdf') {
+      alert('El archivo debe ser un PDF.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
+
+    // Validar tamaño (10 MB)
+    if (file.size > 10 * 1024 * 1024) {
+      alert('El tamaño del archivo no debe superar los 10 MB.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
     setPregunta1pdf(event.target.files[0]);
   };
   const handlePregunta2pdfChange = (event) => {
+    const fileInput = event.target;
+    const file = fileInput.files[0];
+
+    if (!file) {
+      alert('Selecciona un archivo para cargar.');
+      return;
+    }
+
+    // Validar tipo MIME
+    if (file.type !== 'application/pdf') {
+      alert('El archivo debe ser un PDF.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
+
+    // Validar tamaño (10 MB)
+    if (file.size > 10 * 1024 * 1024) {
+      alert('El tamaño del archivo no debe superar los 10 MB.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
     setPregunta2pdf(event.target.files[0]);
   };
   const handlePregunta3pdfChange = (event) => {
+    const fileInput = event.target;
+    const file = fileInput.files[0];
+
+    if (!file) {
+      alert('Selecciona un archivo para cargar.');
+      return;
+    }
+
+    // Validar tipo MIME
+    if (file.type !== 'application/pdf') {
+      alert('El archivo debe ser un PDF.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
+
+    // Validar tamaño (10 MB)
+    if (file.size > 10 * 1024 * 1024) {
+      alert('El tamaño del archivo no debe superar los 10 MB.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
     setPregunta3pdf(event.target.files[0]);
   };
   const handlePregunta10pdfChange = (event) => {
+    const fileInput = event.target;
+    const file = fileInput.files[0];
+
+    if (!file) {
+      alert('Selecciona un archivo para cargar.');
+      return;
+    }
+
+    // Validar tipo MIME
+    if (file.type !== 'application/pdf') {
+      alert('El archivo debe ser un PDF.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
+
+    // Validar tamaño (10 MB)
+    if (file.size > 10 * 1024 * 1024) {
+      alert('El tamaño del archivo no debe superar los 10 MB.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
     setPregunta10pdf(event.target.files[0]);
   };
   const handlePregunta12pdfChange = (event) => {
+    const fileInput = event.target;
+    const file = fileInput.files[0];
+
+    if (!file) {
+      alert('Selecciona un archivo para cargar.');
+      return;
+    }
+
+    // Validar tipo MIME
+    if (file.type !== 'application/pdf') {
+      alert('El archivo debe ser un PDF.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
+
+    // Validar tamaño (10 MB)
+    if (file.size > 10 * 1024 * 1024) {
+      alert('El tamaño del archivo no debe superar los 10 MB.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
     setPregunta12pdf(event.target.files[0]);
   };
   const handlePregunta17pdfChange = (event) => {
+    const fileInput = event.target;
+    const file = fileInput.files[0];
+
+    if (!file) {
+      alert('Selecciona un archivo para cargar.');
+      return;
+    }
+
+    // Validar tipo MIME
+    if (file.type !== 'application/pdf') {
+      alert('El archivo debe ser un PDF.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
+
+    // Validar tamaño (10 MB)
+    if (file.size > 10 * 1024 * 1024) {
+      alert('El tamaño del archivo no debe superar los 10 MB.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
     setPregunta17pdf(event.target.files[0]);
   };
   const handlePregunta23pdfChange = (event) => {
+    const fileInput = event.target;
+    const file = fileInput.files[0];
+
+    if (!file) {
+      alert('Selecciona un archivo para cargar.');
+      return;
+    }
+
+    // Validar tipo MIME
+    if (file.type !== 'application/pdf') {
+      alert('El archivo debe ser un PDF.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
+
+    // Validar tamaño (10 MB)
+    if (file.size > 10 * 1024 * 1024) {
+      alert('El tamaño del archivo no debe superar los 10 MB.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
     setPregunta23pdf(event.target.files[0]);
   };
   const handlePregunta28pdfChange = (event) => {
+    const fileInput = event.target;
+    const file = fileInput.files[0];
+
+    if (!file) {
+      alert('Selecciona un archivo para cargar.');
+      return;
+    }
+
+    // Validar tipo MIME
+    if (file.type !== 'application/pdf') {
+      alert('El archivo debe ser un PDF.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
+
+    // Validar tamaño (10 MB)
+    if (file.size > 10 * 1024 * 1024) {
+      alert('El tamaño del archivo no debe superar los 10 MB.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
     setPregunta28pdf(event.target.files[0]);
   };
   const handlePregunta31pdfChange = (event) => {
+    const fileInput = event.target;
+    const file = fileInput.files[0];
+
+    if (!file) {
+      alert('Selecciona un archivo para cargar.');
+      return;
+    }
+
+    // Validar tipo MIME
+    if (file.type !== 'application/pdf') {
+      alert('El archivo debe ser un PDF.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
+
+    // Validar tamaño (10 MB)
+    if (file.size > 10 * 1024 * 1024) {
+      alert('El tamaño del archivo no debe superar los 10 MB.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
     setPregunta31pdf(event.target.files[0]);
   };
   const handlePregunta35pdfChange = (event) => {
+    const fileInput = event.target;
+    const file = fileInput.files[0];
+
+    if (!file) {
+      alert('Selecciona un archivo para cargar.');
+      return;
+    }
+
+    // Validar tipo MIME
+    if (file.type !== 'application/pdf') {
+      alert('El archivo debe ser un PDF.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
+
+    // Validar tamaño (10 MB)
+    if (file.size > 10 * 1024 * 1024) {
+      alert('El tamaño del archivo no debe superar los 10 MB.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
     setPregunta35pdf(event.target.files[0]);
   };
   const handlePregunta40pdfChange = (event) => {
+    const fileInput = event.target;
+    const file = fileInput.files[0];
+
+    if (!file) {
+      alert('Selecciona un archivo para cargar.');
+      return;
+    }
+
+    // Validar tipo MIME
+    if (file.type !== 'application/pdf') {
+      alert('El archivo debe ser un PDF.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
+
+    // Validar tamaño (10 MB)
+    if (file.size > 10 * 1024 * 1024) {
+      alert('El tamaño del archivo no debe superar los 10 MB.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
     setPregunta40pdf(event.target.files[0]);
   };
   const handlePregunta41pdfChange = (event) => {
+    const fileInput = event.target;
+    const file = fileInput.files[0];
+
+    if (!file) {
+      alert('Selecciona un archivo para cargar.');
+      return;
+    }
+
+    // Validar tipo MIME
+    if (file.type !== 'application/pdf') {
+      alert('El archivo debe ser un PDF.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
+
+    // Validar tamaño (10 MB)
+    if (file.size > 10 * 1024 * 1024) {
+      alert('El tamaño del archivo no debe superar los 10 MB.');
+      // Puedes limpiar el input de archivo si no cumple con los requisitos
+      fileInput.value = '';
+      return;
+    }
     setPregunta41pdf(event.target.files[0]);
   };
 
@@ -573,6 +852,7 @@ export default function Questions({ userRole, userNit }) {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+    setLoading(true); // Deshabilita y muestra "Cargando"
 
     try {
       const formData = new FormData();
@@ -646,35 +926,40 @@ export default function Questions({ userRole, userNit }) {
       formData.append('pregunta41', pregunta41);
       formData.append('pregunta41pdf', pregunta41pdf);
 
-      await axios
-        .post('/questions', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-          withCredentials: true,
-        })
-        .then((res) => {
-          const objectRoles = {
-            1: 'COMERCIAL_Y_SERVICIOS',
-            2: 'ORGANICOS',
-            3: 'INSTITUCIONES_EDUCATIVAS',
-            4: 'EVENTOS_MASIVOS',
-            5: 'ENTIDADES_PUBLICAS',
-            6: 'DESARROLLOS_MULTIFAMILIARES',
-          };
-          console.log('Datos enviados correctamente');
-          const user = JSON.parse(localStorage.userInfo);
-          const role = parseInt(user.idsector);
-          let userRole = objectRoles[role];
-          navigate(PATH_BY_ROLE.get(userRole));
-        })
-        .catch((err) => console.log(err));
+      await axios.post('/questions', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        withCredentials: true,
+      });
+      const objectRoles = {
+        1: 'COMERCIAL_Y_SERVICIOS',
+        2: 'ORGANICOS',
+        3: 'INSTITUCIONES_EDUCATIVAS',
+        4: 'EVENTOS_MASIVOS',
+        5: 'ENTIDADES_PUBLICAS',
+        6: 'DESARROLLOS_MULTIFAMILIARES',
+      };
+      console.log('Datos enviados correctamente');
+      const user = JSON.parse(localStorage.userInfo);
+      const role = parseInt(user.idsector);
+      let userRole = objectRoles[role];
+      navigate(PATH_BY_ROLE.get(userRole));
+    } catch (error) {
+      console.error(error);
 
       // Realizar acciones adicionales después del envío exitoso
-    } catch (error) {
-      console.error('Error al enviar los datos:', error);
-      // Realizar acciones adicionales en caso de error
+
+      // Muestra el mensaje de error utilizando react-toastify
+      if (error.response && error.response.data && error.response.data.error) {
+        toast.error(error.response.data.error);
+      } else {
+        // Manejo de otros errores
+        toast.error('Hubo un error al procesar la solicitud');
+      }
     }
+
+    setLoading(false); // Restaura el botón
 
     handleCloseModal();
   };
@@ -688,10 +973,16 @@ export default function Questions({ userRole, userNit }) {
       <br></br>
       <h4 className="my-3">CUESTIONARIO MANUAL DE SGIRS</h4>
       <br></br>
+      <h5 className="my-3">
+        Recuerda que una vez iniciado el diligenciamiento debes completar el
+        reporte, no se podrán modificar las respuestas una vez se continue a la
+        siguiente página o se envie el formulario en su totalidad.
+      </h5>
       <Form onSubmit={submitHandler}>
         {/* PREGUNTA 1 */}
         <Form.Label>
-          ¿Cuenta con un diagnóstico del SGIRS? Anexar documento de diagnóstico
+          ¿Cuenta con un documento que soporte la implementación del SGIRS?
+          Anexar documento de SGIRS en pdf
         </Form.Label>
         {['radio'].map((type) => (
           <div key={`inline-${type}`} className="mb-3">
@@ -1099,8 +1390,8 @@ export default function Questions({ userRole, userNit }) {
             {/* PREGUNTA 13 */}
             <Form.Group controlId="pregunta13">
               <Form.Label>
-                Especificar cuál es el gestor de Residuos Sólidos Orgánicos -
-                RSO
+                Especificar cuál es la empresa de recolección de Residuos
+                Sólidos Orgánicos - RSO
               </Form.Label>
               <Form.Select value={pregunta13} onChange={handlePregunta13Change}>
                 <option>Seleccione una opción</option>
@@ -1112,7 +1403,14 @@ export default function Questions({ userRole, userNit }) {
                 <option value="CORPOAMBIENTE">CORPOAMBIENTE</option>
                 <option value="SOLTAC SAS">SOLTAC SAS</option>
                 <option value="COMPOSTANDO">COMPOSTANDO</option>
-                <option value="OTRO">OTRO</option>
+                <option value="BIOASEO SAS ESP">BIOASEO SAS ESP</option>
+                <option
+                  value="CIUDAD LIMPIA
+BOGOTA S.A E. S.P
+"
+                >
+                  CIUDAD LIMPIA BOGOTA S.A E. S.P
+                </option>
               </Form.Select>
             </Form.Group>
             <br></br>
@@ -1231,9 +1529,9 @@ export default function Questions({ userRole, userNit }) {
 
             <Form.Label>
               ¿Solicita recolección de residuos aprovechables a través de un
-              gestor de aprovechamiento? Si cuenta con certificados de
-              aprovechamiento anexar en un solo archivo (formato PDF) los
-              certificados correspondientes al periodo de reporte
+              gestor de aprovechamiento? Si cuenta con certificados anexar en un
+              solo archivo (formato PDF) los certificados correspondientes al
+              periodo de reporte y el contrato de condiciones uniformes (CCU)
             </Form.Label>
             {['radio'].map((type) => (
               <div key={`inline-${type}`} className="mb-3">
@@ -1384,33 +1682,34 @@ export default function Questions({ userRole, userNit }) {
                         onChange={handlePregunta20Change}
                       >
                         <option>Seleccione una opción</option>
-                        <option value="GRUPO EMPRESARIAL DE LA RECUPERACIÓN Y TRANSFORMACIÓN DE MATERIALES S.A. E.S.P - GERT S.A. E.S.P">
-                          GRUPO EMPRESARIAL DE LA RECUPERACIÓN Y TRANSFORMACIÓN
-                          DE MATERIALES S.A. E.S.P - GERT S.A. E.S.P
+                        <option
+                          value="GRUPO EMPRESARIAL DE LA RECUPERACION Y TRANSFORMACION
+                          DE MATERIALES S.A. E.S.P."
+                        >
+                          GRUPO EMPRESARIAL DE LA RECUPERACION Y TRANSFORMACION
+                          DE MATERIALES S.A. E.S.P.
                         </option>
                         <option value="SERVICIOS EMPRESARIALES DE ASEO S.A.S E.S.P">
                           SERVICIOS EMPRESARIALES DE ASEO S.A.S E.S.P
                         </option>
-                        <option value="COCOAMBIENTAL S.A.S.">
-                          COCOAMBIENTAL S.A.S.
+                        <option value="APROVECHAMIENTO DE COLOMBIA S.A.S ESP">
+                          APROVECHAMIENTO DE COLOMBIA S.A.S ESP
+                        </option>
+                        <option value="GRUPO EMPRESARIAL BIO GREEN S.A.S. E.S.P.">
+                          GRUPO EMPRESARIAL BIO GREEN S.A.S. E.S.P.
                         </option>
                         <option value="GEO RECICLABLES DE COLOMBIA S.A.S.">
                           GEO RECICLABLES DE COLOMBIA S.A.S.
                         </option>
-                        <option value="GRUPO EMPRESARIA BIO GREEN S.A.S. E.S.P.">
-                          GRUPO EMPRESARIA BIO GREEN S.A.S. E.S.P.
+                        <option value="RECICLAJE INDUSTRIAL DE COLOMBIA S.A.S.">
+                          RECICLAJE INDUSTRIAL DE COLOMBIA S.A.S.
                         </option>
-                        <option value="APROVECHAMIENTO DE COLOMBIA S.A.S E.S.P">
-                          APROVECHAMIENTO DE COLOMBIA S.A.S E.S.P
-                        </option>
-                        <option value="FUNDACIÓN DE RECICLADORES INDEPENDIENTES DE CALI">
-                          FUNDACIÓN DE RECICLADORES INDEPENDIENTES DE CALI
-                        </option>
+                        <option value="BLUEBOX S.A.S.">BLUEBOX S.A.S.</option>
                         <option value="INNOVACIÓN BIOAMBIENTAL S.A.S. E.S.P.">
                           INNOVACIÓN BIOAMBIENTAL S.A.S. E.S.P.
                         </option>
-                        <option value="RECICLAJE INDUSTRIAL DE COLOMBIA S.A.S.">
-                          RECICLAJE INDUSTRIAL DE COLOMBIA S.A.S.
+                        <option value="SERVIAPROVECHABLES VALLE SAS ESP">
+                          SERVIAPROVECHABLES VALLE SAS ESP
                         </option>
                       </Form.Select>
                     </Form.Group>
@@ -1596,6 +1895,20 @@ export default function Questions({ userRole, userNit }) {
                     <option value="RECUPERADORES INDUSTRIALES NACIONALES S.A.S. - RECUIN">
                       RECUPERADORES INDUSTRIALES NACIONALES S.A.S. - RECUIN
                     </option>
+                    <option value="RE BIEN - FUNDACION RECICLANDO BIEN">
+                      RE BIEN - FUNDACION RECICLANDO BIEN
+                    </option>
+                    <option value="ASODECORES - ASOCIACIÓN DE COMERCIANTES DE MATERIALES RECICLABLES DE SILOÉ">
+                      ASODECORES - ASOCIACIÓN DE COMERCIANTES DE MATERIALES
+                      RECICLABLES DE SILOÉ
+                    </option>
+                    <option value="NUESTRO PLANETA - FUNDACION DE RECUPERADORES DE OFICIO NUESTRO PLANETA">
+                      NUESTRO PLANETA - FUNDACION DE RECUPERADORES DE OFICIO
+                      NUESTRO PLANETA
+                    </option>
+                    <option value="CICLOS - FUNDACION CICLOS VALLE">
+                      CICLOS - FUNDACION CICLOS VALLE
+                    </option>
                   </Form.Select>
                 </Form.Group>
                 <br></br>
@@ -1609,11 +1922,10 @@ export default function Questions({ userRole, userNit }) {
               </Form.Label>
               <Form.Select value={pregunta25} onChange={handlePregunta25Change}>
                 <option>Seleccione una opción</option>
-                <option value="7 DÍAS A LA SEMANA">7 DÍAS A LA SEMANA</option>
-                <option value="6 DÍAS A LA SEMANA">6 DÍAS A LA SEMANA</option>
-                <option value="3 DÍAS A LA SEMANA">3 DÍAS A LA SEMANA</option>
-                <option value="2 DÍAS A LA SEMANA">2 DÍAS A LA SEMANA</option>
-                <option value="1 DÍA A LA SEMANA">1 DÍA A LA SEMANA</option>
+                <option value="SEMESTRAL">SEMESTRAL</option>
+                <option value="TRIMESTRAL">TRIMESTRAL</option>
+                <option value="MENSUAL">MENSUAL</option>
+                <option value="SEMANAL">SEMANAL</option>
               </Form.Select>
             </Form.Group>
             <br></br>
@@ -1990,7 +2302,7 @@ export default function Questions({ userRole, userNit }) {
         )}
 
         {/* PREGUNTA 33 */}
-        <Form.Label>¿El establecimento genera Residuos Peligrosos?.</Form.Label>
+        <Form.Label>¿El establecimento genera Residuos Peligrosos?</Form.Label>
         {['radio'].map((type) => (
           <div key={`inline-${type}`} className="mb-3">
             <Form.Check
@@ -2125,6 +2437,125 @@ export default function Questions({ userRole, userNit }) {
                 type="checkbox"
                 value="fungicidas"
                 checked={pregunta34.includes('fungicidas')}
+                onChange={handlePregunta34Change}
+              />
+              <Form.Check
+                inline
+                label="Pilas"
+                name="pregunta34"
+                type="checkbox"
+                value="pilas"
+                checked={pregunta34.includes('pilas')}
+                onChange={handlePregunta34Change}
+              />
+
+              <Form.Check
+                inline
+                label="Bombillas y luminarias"
+                name="pregunta34"
+                type="checkbox"
+                value="bombillasluminarias"
+                checked={pregunta34.includes('bombillasluminarias')}
+                onChange={handlePregunta34Change}
+              />
+
+              <Form.Check
+                inline
+                label="Cintas o tonner de impresora"
+                name="pregunta34"
+                type="checkbox"
+                value="cintastonnerimpresora"
+                checked={pregunta34.includes('cintastonnerimpresora')}
+                onChange={handlePregunta34Change}
+              />
+
+              <Form.Check
+                inline
+                label="Medicamentos vencidos"
+                name="pregunta34"
+                type="checkbox"
+                value="medicamentosvencidos"
+                checked={pregunta34.includes('medicamentosvencidos')}
+                onChange={handlePregunta34Change}
+              />
+
+              <Form.Check
+                inline
+                label="Plaguicidas"
+                name="pregunta34"
+                type="checkbox"
+                value="plaguicidas"
+                checked={pregunta34.includes('plaguicidas')}
+                onChange={handlePregunta34Change}
+              />
+
+              <Form.Check
+                inline
+                label="Pegantes"
+                name="pregunta34"
+                type="checkbox"
+                value="pegantes"
+                checked={pregunta34.includes('pegantes')}
+                onChange={handlePregunta34Change}
+              />
+
+              <Form.Check
+                inline
+                label="Ácidos o inflamables"
+                name="pregunta34"
+                type="checkbox"
+                value="acidosinflamables"
+                checked={pregunta34.includes('acidosinflamables')}
+                onChange={handlePregunta34Change}
+              />
+
+              <Form.Check
+                inline
+                label="Lodos"
+                name="pregunta34"
+                type="checkbox"
+                value="lodos"
+                checked={pregunta34.includes('lodos')}
+                onChange={handlePregunta34Change}
+              />
+
+              <Form.Check
+                inline
+                label="Borras (EDS)"
+                name="pregunta34"
+                type="checkbox"
+                value="borras"
+                checked={pregunta34.includes('borras')}
+                onChange={handlePregunta34Change}
+              />
+
+              <Form.Check
+                inline
+                label="Agua hidrocarburada (EDS)"
+                name="pregunta34"
+                type="checkbox"
+                value="aguahidrocarburada"
+                checked={pregunta34.includes('aguahidrocarburada')}
+                onChange={handlePregunta34Change}
+              />
+
+              <Form.Check
+                inline
+                label="Biosanitarios"
+                name="pregunta34"
+                type="checkbox"
+                value="biosanitarios"
+                checked={pregunta34.includes('biosanitarios')}
+                onChange={handlePregunta34Change}
+              />
+
+              <Form.Check
+                inline
+                label="Anatomopatológicos"
+                name="pregunta34"
+                type="checkbox"
+                value="anatomopatológicos"
+                checked={pregunta34.includes('anatomopatológicos')}
                 onChange={handlePregunta34Change}
               />
             </div>
@@ -2494,7 +2925,7 @@ export default function Questions({ userRole, userNit }) {
         <Form.Label>
           ¿El establecimiento realiza acciones de mejora continua al SGIRS?
           ¿Cuales acciones de mejora ha implementado teniendo en cuenta el
-          cuadro de “acciones de mejora” establecido en el manual.
+          cuadro de “acciones de mejora” establecido en el manual?
         </Form.Label>
         {['radio'].map((type) => (
           <div key={`inline-${type}`} className="mb-3">
@@ -2557,12 +2988,27 @@ export default function Questions({ userRole, userNit }) {
                 variant="success"
                 type="submit"
                 onClick={(event) => submitHandler(event)}
+                disabled={loading} // Deshabilita el botón mientras carga
               >
-                Continuar
+                {loading ? (
+                  <>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />{' '}
+                    Cargando por favor espere...
+                  </>
+                ) : (
+                  'Continuar'
+                )}
               </Button>
             </div>
           </Modal.Footer>
         </Modal>
+
         <MyVerticallyCenteredModal
           show={modalShow}
           parrafo="¡Bienvenido/a a la plataforma dispuesta por la Alcaldía de Santiago de Cali para el reporte de indicadores e implementación del Decreto 0595 de 2022 relacionado a la adopción del Sistema de Gestión Integral de Residuos Sólidos – SGIRS. 

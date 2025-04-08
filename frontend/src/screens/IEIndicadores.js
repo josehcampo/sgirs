@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Form, Table, Modal, Button } from 'react-bootstrap';
-import Axios from 'axios';
 import axios from '../api/axios';
 
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -8,6 +7,8 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import MyVerticallyCenteredModal from '../componentes/Modal';
+
+import { FaCheckCircle, FaDownload } from 'react-icons/fa';
 
 export default function IEIndicadores() {
   const navigate = useNavigate();
@@ -236,8 +237,6 @@ export default function IEIndicadores() {
     seti5Totalmayo(i5Totalmayo);
     seti5Totaljunio(i5Totaljunio);
 
-    setLoading(true);
-
     try {
       await axios.post(
         '/indicadoresie1',
@@ -361,6 +360,8 @@ export default function IEIndicadores() {
       );
 
       console.log('Datos enviados correctamente');
+      setShowModal(true); // Mostrar modal de éxito
+
       navigate(redirect || '/');
     } catch (err) {
       console.log('Error al enviar los datos');
@@ -483,14 +484,6 @@ export default function IEIndicadores() {
     i5junio1,
     i5junio2,
   ]);
-
-  // useEffect(() => {
-  //  if (userInfo) {
-  //   navigate(redirect);
-  //  }
-  // }, [navigate, redirect, userInfo]);
-
-  const [loading, setLoading] = useState(false);
 
   return (
     <Container className="small-container2">
@@ -1342,42 +1335,67 @@ export default function IEIndicadores() {
           </tbody>
         </Table>
 
+        <br></br>
         <div className="boton">
           <Button variant="success" type="button" onClick={handleShowModal}>
             Siguiente
           </Button>
         </div>
+
         <Modal show={showModal} onHide={handleCloseModal}>
-          <Modal.Header closeButton></Modal.Header>
+          <Modal.Header closeButton>
+            <Modal.Title>
+              <FaCheckCircle
+                style={{ color: '#28a745', marginRight: '10px' }}
+              />
+              ¡Éxito!
+            </Modal.Title>
+          </Modal.Header>{' '}
           <Modal.Body>
             {/* Contenido del modal */}
-            <p>
+            <p style={{ textAlign: 'justify' }}>
               ¡Felicidades por completar el reporte de indicadores y cumplir con
               los requerimientos del Decreto 0595 de 2022! Tu compromiso es
               clave en el camino hacia una gestión de residuos sólidos más
               efectiva. Si en algún momento necesitas asistencia técnica para el
               diseño o implementación del SGIRS, recuerda que la Unidad
               Administrativa Especial de Servicios Públicos - UAESP está aquí
-              para apoyarte. Al correo registrado será enviado próximamente el
-              certificado de reporte con los datos suministrados en el registro
-              de usuario. ¡Gracias por tu dedicación y hasta la próxima!
+              para apoyarte.
+            </p>
+            <p style={{ textAlign: 'justify' }}>
+              Al correo registrado será enviado próximamente el certificado de
+              reporte con los datos suministrados en el registro de usuario.
+              ¡Gracias por tu dedicación y hasta la próxima!
             </p>
           </Modal.Body>
-          <Modal.Footer>
-            <div className="boton">
-              <Button
-                variant="success"
-                type="submit"
-                onClick={(event) => submitHandler(event)}
-              >
-                Enviar
+          <Modal.Footer className="d-flex justify-content-center">
+            <Button
+              variant="success"
+              type="button"
+              onClick={(event) => {
+                setShowModal(false); // Cierra el modal
+                submitHandler(event); // Ejecuta la lógica de envío
+              }}
+            >
+              Enviar
+            </Button>
+
+            <a
+              href="/CERTIFICADO SGIRS INS EDUCATIVA.pdf"
+              download="CERTIFICADO SGIRS INS EDUCATIVA.pdf"
+            >
+              <Button variant="primary" className="ml-2">
+                <FaDownload style={{ marginRight: '5px' }} />
+                Descargar certificado del reporte
               </Button>
-            </div>
+            </a>
           </Modal.Footer>
         </Modal>
+
         <MyVerticallyCenteredModal
           show={modalShow}
-          parrafo="¡Hola! Para mantener la coherencia en nuestros registros, recuerda que al reportar indicadores, por favor utiliza números enteros. En caso de contar con certificados que presenten valores decimales, te sugerimos aproximarlo al número entero más cercano y asegúrate de incluir las unidades solicitadas, como kilogramos. Esta práctica nos ayudará a mantener la consistencia en nuestros datos y facilitará el análisis para mejorar nuestras acciones en la gestión de residuos. ¡Gracias por tu colaboración!"
+          parrafo="¡Hola! Para mantener la coherencia en nuestros registros, recuerda que al reportar indicadores, por favor utiliza números enteros. En caso de contar con certificados que presenten valores decimales, te sugerimos aproximarlo al número entero más cercano y asegúrate de incluir las unidades solicitadas, como kilogramos. Esta práctica nos ayudará a mantener la consistencia en nuestros datos y facilitará el análisis para mejorar nuestras acciones en la gestión de residuos. 
+          ¡Gracias por tu colaboración!"
           onHide={() => setModalShow(false)}
         />
         <br></br>
